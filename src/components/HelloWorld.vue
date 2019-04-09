@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
-    <h1>Pokémon:</h1>
+    <p>Search Pokémon's abilities:</p>
     <input type="text" v-on:input="sendData()" v-model="input.pokemon" placeholder="Pokémon" />
-    <button v-on:click="sendData()">Send</button>
     <br />
     <br />
     <pre>{{ response }}</pre>
@@ -19,18 +18,27 @@
                 input: {
                     pokemon: "",
                 },
-                response: ""
+                response: "",
+                cache: {}
             }
         },
-        //https://pokeapi.co/api/v2/pokemon/12/
         methods: {
             sendData() {
+              if(this.cache[this.input.pokemon])
+              {
+                this.response=this.cache[this.input.pokemon];
+                return
+              }
+
               if(this.input.pokemon.length < 3)
               return;
                 axios({ method: "GET", "url": `https://pokeapi.co/api/v2/pokemon/${this.input.pokemon}/`, "headers": { "content-type": "application/json" } }).then(result => {
                     this.response = "Abilities: " + result.data.abilities.map((ab)=> ab.ability.name).join(", ");
+                    this.cache[this.input.pokemon]=this.response
                 }, error => {
-                  this.response=`Did not find: ${this.input.pokemon}`
+                  this.response=`Did not find: ${this.input.pokemon}`;
+                  this.cache[this.input.pokemon]=this.response
+
                     // console.error(error);
                 });
             }
