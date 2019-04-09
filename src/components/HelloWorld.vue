@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
     <h1>Pokémon:</h1>
-    <input type="text" v-model="input.firstname" placeholder="Pokémon" />
+    <input type="text" v-model="input.pokemon" placeholder="Pokémon" />
     <button v-on:click="sendData()">Send</button>
     <br />
     <br />
-    <textarea>{{ response }}</textarea>
+    <pre>{{ response }}</pre>
   </div>
 </template>
 
@@ -17,7 +17,7 @@
         data () {
             return {
                 input: {
-                    firstname: "",
+                    pokemon: "",
                 },
                 response: ""
             }
@@ -25,8 +25,8 @@
         //https://pokeapi.co/api/v2/pokemon/12/
         methods: {
             sendData() {
-                axios({ method: "POST", "url": "https://pokem.io/api/${this.input}/", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data;
+                axios({ method: "GET", "url": `https://pokeapi.co/api/v2/pokemon/${this.input.pokemon}/`, "headers": { "content-type": "application/json" } }).then(result => {
+                    this.response = result.data.abilities.map((ab)=> ab.ability.name).join(", ");
                 }, error => {
                     console.error(error);
                 });
