@@ -28,3 +28,6 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+# References
+https://www.thepolyglotdeveloper.com/2017/10/consume-api-data-http-vuejs-web-application/
