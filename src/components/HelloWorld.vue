@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>Your IP is {{ ip }}</h1>
-    <input type="text" v-model="input.firstname" placeholder="first name" />
+    <h1>Pokémon:</h1>
+    <input type="text" v-model="input.firstname" placeholder="Pokémon" />
     <button v-on:click="sendData()">Send</button>
     <br />
     <br />
@@ -16,23 +16,16 @@
         name: 'HelloWorld',
         data () {
             return {
-                ip: "",
                 input: {
                     firstname: "",
                 },
                 response: ""
             }
         },
-        mounted() {
-            axios({ method: "GET", "url": "https://httpbin.org/ip" }).then(result => {
-                this.ip = result.data.origin;
-            }, error => {
-                console.error(error);
-            });
-        },
+        //https://pokeapi.co/api/v2/pokemon/12/
         methods: {
             sendData() {
-                axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+                axios({ method: "POST", "url": "https://pokem.io/api/${this.input}/", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
                     this.response = result.data;
                 }, error => {
                     console.error(error);
